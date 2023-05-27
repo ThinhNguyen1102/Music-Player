@@ -1,16 +1,15 @@
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet } from "react-native";
 import React from "react";
-import { useNavigation } from "@react-navigation/native";
-import Ionicons from "react-native-vector-icons/Ionicons";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import PlayScreen from "./PlayScreen";
 import Home from "./Home";
+import SongOption from "./SongOption";
+import NewPlaylist from "./NewPlaylist";
 
 const Stack = createNativeStackNavigator();
 
 const MainScreen = () => {
-  const navigation = useNavigation();
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -22,6 +21,22 @@ const MainScreen = () => {
         name="PlayScreen"
         component={PlayScreen}
         options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="SongOption"
+        component={SongOption}
+        options={{
+          headerShown: false,
+          presentation: "transparentModal",
+        }}
+      />
+      <Stack.Screen
+        name="NewPlaylistS"
+        component={NewPlaylist}
+        options={{
+          headerShown: false,
+          presentation: "transparentModal",
+        }}
       />
     </Stack.Navigator>
   );

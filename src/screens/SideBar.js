@@ -3,8 +3,10 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 import MainScreen from "./MainScreen";
-import PlaylistScreen from "./PlaylistScreen";
 import CustomDrawer from "../components/CustomDrawer";
+import PlaylistScreen from "./PlaylistScreen";
+import AllSongScreen from "./AllSongScreen";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 const Drawer = createDrawerNavigator();
 
@@ -50,6 +52,23 @@ const SideBar = () => {
             return (
               <Ionicons
                 name="albums"
+                size={22}
+                color={focused ? "#4A69BD" : "#868e96"}
+              />
+            );
+          },
+        }}
+      />
+      <Drawer.Screen
+        name="AllSong"
+        component={AllSongScreen}
+        options={{
+          headerStyle: { backgroundColor: "#F7F1E3" },
+          headerTitle: "",
+          drawerIcon: ({ focused }) => {
+            return (
+              <MaterialIcons
+                name="featured-play-list"
                 size={22}
                 color={focused ? "#4A69BD" : "#868e96"}
               />

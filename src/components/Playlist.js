@@ -4,7 +4,7 @@ import { StyleSheet, View, FlatList, Text } from "react-native";
 import PlaylistItem from "./PlaylistItem";
 import TrackContext from "../contexts/TrackContext";
 
-function Playlist() {
+function Playlist({ withOption }) {
   const trackCtx = useContext(TrackContext);
 
   return (
@@ -12,7 +12,7 @@ function Playlist() {
       <FlatList
         data={trackCtx.queue}
         renderItem={({ item, index }) => (
-          <PlaylistItem index={index} track={item} />
+          <PlaylistItem index={index} track={item} withOption={withOption} />
         )}
         scrollToOverflowEnabled
       />

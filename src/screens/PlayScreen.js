@@ -18,6 +18,19 @@ const PlayScreen = () => {
     navigation.goBack();
   };
 
+  function format(seconds) {
+    let mins = parseInt(seconds / 60)
+      .toString()
+      .padStart(2, "0");
+    let secs = (Math.trunc(seconds) % 60).toString().padStart(2, "0");
+    return `${mins}:${secs}`;
+  }
+
+  // console.log(trackCtx.currentTrack);
+  const artworkUri = trackCtx.currentTrack
+    ? trackCtx.currentTrack.artwork
+    : "https://firebasestorage.googleapis.com/v0/b/musicplayer-rn.appspot.com/o/images%2Fdefault_artwork.png?alt=media&token=3e352d53-efec-4907-8f6b-d286c007e47b";
+
   return (
     <View style={styles.wrapper}>
       <View style={styles.backHome}>
@@ -34,26 +47,32 @@ const PlayScreen = () => {
       <View style={styles.container}>
         <Image
           source={{
-            uri: trackCtx.currentTrack.artwork,
+            uri: artworkUri,
           }}
           style={styles.artwork}
         />
         <View style={styles.main}>
-          <Text style={styles.title}>{trackCtx.currentTrack.title}</Text>
-          <Text style={styles.artist}>{trackCtx.currentTrack.artist}</Text>
+          <Text style={styles.title}>{trackCtx.currentTrack?.title}</Text>
+          <Text style={styles.artist}>{trackCtx.currentTrack?.artist}</Text>
         </View>
-        <Slider
-          style={styles.slider}
-          value={progress.position}
-          minimumValue={0}
-          maximumValue={progress.duration}
-          minimumTrackTintColor="#0C2461"
-          maximumTrackTintColor="#868e96"
-          thumbTintColor="#0C2461"
-          onSlidingComplete={async (value) => {
-            await TrackPlayer.seekTo(value);
-          }}
-        />
+        <View style={styles.sliderBox}>
+          <Slider
+            style={styles.slider}
+            value={progress.position}
+            minimumValue={0}
+            maximumValue={progress.duration}
+            minimumTrackTintColor="#0C2461"
+            maximumTrackTintColor="#868e96"
+            thumbTintColor="#0C2461"
+            onSlidingComplete={async (value) => {
+              await TrackPlayer.seekTo(value);
+            }}
+          />
+          <View style={styles.progressBox}>
+            <Text style={styles.progressText}>{format(progress.position)}</Text>
+            <Text style={styles.progressText}>{format(progress.duration)}</Text>
+          </View>
+        </View>
         <Controls />
       </View>
     </View>
@@ -98,9 +117,32 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
 
+  sliderBox: {
+    width: "100%",
+    marginBottom: 30,
+    // backgroundColor: "white",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
   slider: {
     width: "95%",
-    marginBottom: 30,
+  },
+
+  progressBox: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "95%",
+    paddingLeft: 15,
+    paddingRight: 15,
+  },
+
+  progressText: {
+    color: "#0C2461",
+    fontSize: 12,
+    fontWeight: "bold",
   },
 
   title: {
@@ -117,5 +159,14 @@ const styles = StyleSheet.create({
     paddingLeft: 14,
     display: "flex",
     gap: 5,
+  },
+  loading: {
+    position: "absolute",
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    zIndex: 10,
+    backgroundColor: "#fff",
   },
 });

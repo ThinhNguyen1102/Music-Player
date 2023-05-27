@@ -1,12 +1,20 @@
 import TrackPlayer, {
   usePlaybackState,
   State,
+  RepeatMode,
 } from "react-native-track-player";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { TouchableOpacity, View, StyleSheet } from "react-native";
+import { useContext, useState } from "react";
+import TrackContext from "../contexts/TrackContext";
+import { useNavigation } from "@react-navigation/native";
 
-function Controls({ onShuffle }) {
+function Controls() {
   const playerState = usePlaybackState();
+  const trackCtx = useContext(TrackContext);
+  const navigation = useNavigation();
 
   async function handlePlayPress() {
     try {
@@ -20,8 +28,32 @@ function Controls({ onShuffle }) {
     }
   }
 
+  async function handleRepeat() {
+    try {
+      if ((await TrackPlayer.getRepeatMode()) == RepeatMode.Track) {
+        await TrackPlayer.setRepeatMode(RepeatMode.Queue);
+        trackCtx.setRepeatMode(RepeatMode.Queue);
+      } else {
+        await TrackPlayer.setRepeatMode(RepeatMode.Track);
+        trackCtx.setRepeatMode(RepeatMode.Track);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   return (
     <View style={styles.control_wrapper}>
+      <TouchableOpacity onPress={handleRepeat}>
+        <MaterialIcons
+          name={`${
+            trackCtx.repeatMode == RepeatMode.Queue ? "repeat" : "repeat-one"
+          }`}
+          size={36}
+          color="#0C2461"
+        />
+      </TouchableOpacity>
+
       <TouchableOpacity
         onPress={async () => {
           return TrackPlayer.skipToPrevious().then((data) => {
@@ -29,8 +61,9 @@ function Controls({ onShuffle }) {
           });
         }}
       >
-        <Ionicons name="play-skip-back" size={42} color="#0C2461" />
+        <Ionicons name="ios-play-skip-back" size={38} color="#0C2461" />
       </TouchableOpacity>
+
       <TouchableOpacity onPress={handlePlayPress}>
         <Ionicons
           name={`ios-${playerState == State.Playing ? "pause" : "play"}-circle`}
@@ -46,7 +79,18 @@ function Controls({ onShuffle }) {
           });
         }}
       >
-        <Ionicons name="play-skip-forward" size={42} color="#0C2461" />
+        <Ionicons name="ios-play-skip-forward" size={38} color="#0C2461" />
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={async () => {
+          navigation.goBack();
+        }}
+      >
+        <MaterialCommunityIcons
+          name="playlist-music"
+          size={42}
+          color="#0C2461"
+        />
       </TouchableOpacity>
     </View>
   );
@@ -58,7 +102,8 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     alignItems: "center",
     justifyContent: "center",
-    gap: 32,
+    gap: 20,
+    width: "95%",
   },
 });
 

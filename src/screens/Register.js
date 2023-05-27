@@ -59,12 +59,14 @@ const Register = () => {
         <TextInput
           style={styles.inputItem}
           placeholder="Nick Name"
+          placeholderTextColor={"#868e96"}
           value={nickName}
           onChangeText={(nickName) => setNickName(nickName)}
         ></TextInput>
         <TextInput
           style={styles.inputItem}
           placeholder="E-mail"
+          placeholderTextColor={"#868e96"}
           value={email}
           onChangeText={(email) => setEmail(email)}
           keyboardType="email-address"
@@ -72,6 +74,7 @@ const Register = () => {
         <TextInput
           style={styles.inputItem}
           placeholder="Password"
+          placeholderTextColor={"#868e96"}
           value={password}
           onChangeText={(pass) => setPassword(pass)}
           secureTextEntry
@@ -79,6 +82,7 @@ const Register = () => {
         <TextInput
           style={styles.inputItem}
           placeholder="Confirm Password"
+          placeholderTextColor={"#868e96"}
           value={cPassword}
           onChangeText={(cpass) => setCPassword(cpass)}
           secureTextEntry
@@ -124,9 +128,11 @@ const styles = StyleSheet.create({
   mainTitle: {
     fontSize: 36,
     fontWeight: "bold",
+    color: "#0C2461",
   },
   subTitle: {
     fontSize: 24,
+    color: "#0C2461",
     textAlign: "center",
   },
 
@@ -179,5 +185,8 @@ const styles = StyleSheet.create({
   },
   registerBtnText: {
     color: "#f8f9fa",
+  },
+  register: {
+    color: "#868e96",
   },
 });

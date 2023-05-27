@@ -1,29 +1,32 @@
-import { StyleSheet, Text, View } from "react-native";
 import React from "react";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import Playlist from "../components/Playlist";
-import Navigation from "../components/Navigation";
+import PlaylistList from "./PlaylistList";
+import PlaylistDetail from "./PlaylistDetail";
+import NewPlaylist from "./NewPlaylist";
+
+const Stack = createNativeStackNavigator();
 
 const PlaylistScreen = () => {
   return (
-    <View style={styles.wrapper}>
-      <Navigation />
-      <View style={styles.container}>
-        <Playlist />
-      </View>
-    </View>
+    <Stack.Navigator>
+      <Stack.Screen
+        name="PlaylistList"
+        component={PlaylistList}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="PlaylistDetail"
+        component={PlaylistDetail}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="NewPlaylist"
+        component={NewPlaylist}
+        options={{ headerShown: false, presentation: "transparentModal" }}
+      />
+    </Stack.Navigator>
   );
 };
 
 export default PlaylistScreen;
-
-const styles = StyleSheet.create({
-  wrapper: {
-    flex: 1,
-    backgroundColor: "#F7F1E3",
-  },
-  container: {
-    flex: 1,
-    padding: 20,
-  },
-});

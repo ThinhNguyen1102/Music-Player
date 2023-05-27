@@ -7,7 +7,7 @@ import {
   Button,
   TouchableOpacity,
 } from "react-native";
-import React from "react";
+import React, { useContext } from "react";
 import {
   DrawerContentScrollView,
   DrawerItemList,
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   logoutText: {
-    fontSize: 18,
+    fontSize: 16,
     color: "#f8f9fa",
   },
 });

@@ -47,7 +47,11 @@ export async function setupPlayer() {
 export async function addTracks() {
   const songs = [];
   try {
-    const snapshot = await firebase.database().ref("/songs").get();
+    const snapshot = await firebase
+      .database()
+      .ref("/songs")
+      .orderByChild("title")
+      .get();
 
     if (snapshot) {
       snapshot.forEach((item) => {

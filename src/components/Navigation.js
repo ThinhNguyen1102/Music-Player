@@ -41,5 +41,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     color: "#0C2461",
+    paddingRight: "50%",
+    transform: [{ translateX: 40 }],
   },
 });

@@ -19,6 +19,7 @@ const SubControl = () => {
       console.log(err);
     }
   }
+
   return (
     <View style={styles.control_wrapper}>
       <TouchableOpacity onPress={handlePlayPress}>

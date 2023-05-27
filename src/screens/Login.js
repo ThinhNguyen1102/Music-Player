@@ -4,12 +4,12 @@ import {
   View,
   TouchableOpacity,
   TextInput,
+  ActivityIndicator,
 } from "react-native";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { firebase } from "../../firebase";
-import { addTracks } from "../utils/TrackPlayerService";
-import TrackPlayer from "react-native-track-player";
+import TrackPlayer, { RepeatMode } from "react-native-track-player";
 import TrackContext from "../contexts/TrackContext";
 
 const Login = () => {
@@ -19,17 +19,28 @@ const Login = () => {
   const navigation = useNavigation();
   const trackCtx = useContext(TrackContext);
 
-  useEffect(() => {
-    const unsubcrible = firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        console.log("user user");
-      }
-    });
+  const initUserLogin = async () => {
+    TrackPlayer.reset();
+    TrackPlayer.add(trackCtx.allSong);
+    TrackPlayer.setRepeatMode(RepeatMode.Queue);
+    trackCtx.setQueue(trackCtx.allSong, 0);
+    trackCtx.getUserPlaylist();
+    trackCtx.setIsLoading(false);
+    navigation.replace("SideBar");
+  };
 
-    return unsubcrible;
-  }, []);
+  // useEffect(() => {
+  //   const unsubcrible = firebase.auth().onAuthStateChanged((user) => {
+  //     if (user) {
+  //       initUserLogin();
+  //     }
+  //   });
+
+  //   return unsubcrible;
+  // }, []);
 
   const handleLoginOnPress = async () => {
+    trackCtx.setIsLoading(true);
     let isValid = true;
     if (!email.trim()) {
       alert("E-mail is require!");
@@ -43,17 +54,7 @@ const Login = () => {
       firebase
         .auth()
         .signInWithEmailAndPassword(email, password)
-        .then(() => {
-          addTracks()
-            .then(() => {
-              return TrackPlayer.getQueue();
-            })
-            .then((queue) => {
-              trackCtx.setQueue(queue);
-              navigation.replace("SideBar");
-            })
-            .catch((err) => console.log(err));
-        })
+        .then(initUserLogin)
         .catch((err) => {
           alert(err.message);
         });
@@ -61,6 +62,13 @@ const Login = () => {
   };
   return (
     <View style={styles.container}>
+      {trackCtx.isLoading && (
+        <ActivityIndicator
+          style={styles.loading}
+          size={"large"}
+          color={"#0C2461"}
+        />
+      )}
       <View style={styles.title}>
         <Text style={styles.mainTitle}>Hello Again!</Text>
         <Text style={styles.subTitle}>Wellcome back you're been missed!</Text>
@@ -69,12 +77,14 @@ const Login = () => {
         <TextInput
           style={styles.inputItem}
           placeholder="E-mail"
+          placeholderTextColor={"#868e96"}
           value={email}
           onChangeText={(email) => setEmail(email)}
         ></TextInput>
         <TextInput
           style={styles.inputItem}
           placeholder="Password"
+          placeholderTextColor={"#868e96"}
           value={password}
           onChangeText={(pass) => setPassword(pass)}
           secureTextEntry
@@ -123,10 +133,13 @@ const styles = StyleSheet.create({
   mainTitle: {
     fontSize: 36,
     fontWeight: "bold",
+    color: "#0C2461",
   },
+
   subTitle: {
     fontSize: 24,
     textAlign: "center",
+    color: "#0C2461",
   },
 
   inputBox: {
@@ -141,6 +154,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#f8f9fa",
     borderRadius: 10,
     paddingLeft: 15,
+    color: "#495057",
   },
   forgot: {
     backgroundColor: "#0C2461",
@@ -171,6 +185,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 
+  register: {
+    color: "#868e96",
+  },
+
   registerBtn: {
     backgroundColor: "#0C2461",
     padding: 5,
@@ -178,5 +196,15 @@ const styles = StyleSheet.create({
   },
   registerBtnText: {
     color: "#f8f9fa",
+  },
+
+  loading: {
+    position: "absolute",
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    zIndex: 10,
+    backgroundColor: "#F7F1E3",
   },
 });
