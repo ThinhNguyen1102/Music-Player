@@ -1,18 +1,32 @@
-import { StyleSheet, View, FlatList } from "react-native";
+import { StyleSheet, View, FlatList, TouchableOpacity } from "react-native";
 import React, { useContext } from "react";
 import TrackContext from "../contexts/TrackContext";
 import PlaylistItem from "../components/PlaylistItem";
 import Navigation from "../components/Navigation";
 import MiniPlayer from "../components/MiniPlayer";
+import { useNavigation } from "@react-navigation/native";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
-const AllSongScreen = () => {
+export default function FavoritesScreen() {
   const trackCtx = useContext(TrackContext);
+  const navigation = useNavigation();
+  const songs = trackCtx.allSong.filter((val) => val.isFavorited);
   return (
     <View style={styles.playlist_wrapper}>
-      <Navigation title={"All Song"} />
+      <Navigation title={"Favorites"} />
+      <TouchableOpacity
+        onPress={() => {
+          trackCtx.changeQueue(songs, 0);
+          navigation.navigate("PlayScreen");
+        }}
+        underlayColor="white"
+        style={styles.playBtnBox}
+      >
+        <Ionicons name={`ios-play-circle`} size={56} color="#0C2461" />
+      </TouchableOpacity>
       <FlatList
         style={styles.listBox}
-        data={trackCtx.allSong}
+        data={songs}
         renderItem={({ item, index }) => (
           <PlaylistItem
             index={index}
@@ -26,9 +40,7 @@ const AllSongScreen = () => {
       <MiniPlayer />
     </View>
   );
-};
-
-export default AllSongScreen;
+}
 
 const styles = StyleSheet.create({
   playlist_wrapper: {
@@ -39,5 +51,11 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
     marginBottom: 100,
+  },
+  playBtnBox: {
+    marginTop: 10,
+    marginBottom: 10,
+    display: "flex",
+    alignItems: "center",
   },
 });

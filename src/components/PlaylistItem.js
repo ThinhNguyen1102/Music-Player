@@ -39,6 +39,8 @@ function PlaylistItem({
     });
   }
 
+  console.log(track);
+
   return (
     <View style={styles.wrapper}>
       <TouchableOpacity onPress={handleItemPress} style={styles.playlistItem}>
@@ -68,9 +70,25 @@ function PlaylistItem({
               <Ionicons name="stats-chart" size={16} color="#4A69BD" />
             </TouchableOpacity>
           )}
-          <TouchableOpacity style={styles.itemOption}>
-            <Ionicons name="heart" size={20} color="#adb5bd" />
-          </TouchableOpacity>
+          {!isInPlaylist && (
+            <TouchableOpacity
+              style={styles.itemOption}
+              onPress={() => {
+                if (!track.isFavorited) {
+                  trackCtx.handleFavorites(track, true);
+                } else {
+                  trackCtx.handleFavorites(track, false);
+                }
+              }}
+            >
+              <Ionicons
+                name="heart"
+                size={20}
+                color="#adb5bd"
+                style={{ color: track.isFavorited ? "#4A69BD" : "#adb5bd" }}
+              />
+            </TouchableOpacity>
+          )}
           {withOption && (
             <TouchableOpacity
               style={styles.itemOption}

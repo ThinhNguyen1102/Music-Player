@@ -7,7 +7,7 @@ import {
   Button,
   TouchableOpacity,
 } from "react-native";
-import React, { useContext } from "react";
+import React from "react";
 import {
   DrawerContentScrollView,
   DrawerItemList,

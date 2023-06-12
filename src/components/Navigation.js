@@ -3,7 +3,7 @@ import React from "react";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import { useNavigation } from "@react-navigation/native";
 
-const Navigation = () => {
+const Navigation = ({ title }) => {
   const navigation = useNavigation();
   const handleMenuOnPress = () => {
     navigation.openDrawer();
@@ -18,7 +18,7 @@ const Navigation = () => {
           style={styles.navIcon}
         />
       </TouchableOpacity>
-      <Text style={styles.navTitle}>Navigation</Text>
+      <Text style={styles.navTitle}>{title ? title : "Navigation"}</Text>
     </View>
   );
 };
@@ -27,21 +27,20 @@ export default Navigation;
 
 const styles = StyleSheet.create({
   NavWrapper: {
-    width: "100%",
+    position: "relative",
     height: 50,
     display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingLeft: 20,
-    paddingRight: 20,
   },
-
   navTitle: {
-    fontSize: 16,
-    fontWeight: "bold",
     color: "#0C2461",
-    paddingRight: "50%",
-    transform: [{ translateX: 40 }],
+    fontWeight: "bold",
+    alignSelf: "center",
+    fontSize: 20,
+    paddingTop: 12,
+  },
+  navIcon: {
+    position: "absolute",
+    top: 12,
+    left: 12,
   },
 });

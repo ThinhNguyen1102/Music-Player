@@ -32,7 +32,7 @@ const PlaylistList = () => {
       >
         <Ionicons name="ios-add-circle" size={64} color="#0C2461" />
       </TouchableOpacity>
-      <Navigation />
+      <Navigation title={"Playlists"} />
       <View style={styles.container}>
         <FlatList
           style={styles.listWrapper}

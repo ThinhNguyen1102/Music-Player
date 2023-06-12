@@ -11,6 +11,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import PlaylistItem from "../components/PlaylistItem";
 import TrackContext from "../contexts/TrackContext";
+import MiniPlayer from "../components/MiniPlayer";
 
 const PlaylistDetail = () => {
   const route = useRoute();
@@ -33,7 +34,6 @@ const PlaylistDetail = () => {
             style={styles.navIcon}
           />
         </TouchableOpacity>
-        <Text style={styles.navTitle}>Navigation</Text>
       </View>
       <View style={styles.contrainer}>
         <Image
@@ -68,6 +68,7 @@ const PlaylistDetail = () => {
           />
         </View>
       </View>
+      <MiniPlayer />
     </View>
   );
 };
@@ -77,6 +78,7 @@ export default PlaylistDetail;
 const styles = StyleSheet.create({
   wrapper: {
     backgroundColor: "#F7F1E3",
+    flex: 1,
   },
   contrainer: {
     display: "flex",

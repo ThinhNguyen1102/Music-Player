@@ -12,10 +12,15 @@ const Home = () => {
   const navigation = useNavigation();
   return (
     <View style={styles.wrapper}>
-      <Navigation />
+      <Navigation title={"Home"} />
       <View style={styles.container}>
         <View style={styles.shortcuts}>
-          <TouchableOpacity style={[styles.shortcutsItem, styles.favorites]}>
+          <TouchableOpacity
+            style={[styles.shortcutsItem, styles.favorites]}
+            onPress={() => {
+              navigation.navigate("Favorites");
+            }}
+          >
             <Ionicons
               name="heart"
               size={20}
@@ -50,7 +55,7 @@ const Home = () => {
               color="#f8f9fa"
               style={styles.icon}
             />
-            <Text style={styles.textWhite}>Queue</Text>
+            <Text style={styles.textWhite}>AllSong</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.titleList}>

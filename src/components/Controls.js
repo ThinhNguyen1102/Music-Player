@@ -16,6 +16,8 @@ function Controls() {
   const trackCtx = useContext(TrackContext);
   const navigation = useNavigation();
 
+  // console.log(trackCtx.currentTrack);
+
   async function handlePlayPress() {
     try {
       if ((await TrackPlayer.getState()) == State.Playing) {

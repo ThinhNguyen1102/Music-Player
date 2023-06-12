@@ -23,6 +23,7 @@ const TrackContext = React.createContext({
   isLoading: false,
   setIsLoading: () => {},
   changeQueue: () => {},
+  handleFavorites: (track, isFavorited) => {},
 });
 
 export const TrackContextProvider = (props) => {
@@ -38,6 +39,40 @@ export const TrackContextProvider = (props) => {
     setQueue(queue);
     setCurrentTrackIndex(index);
     setCurrentTrack(queue[index]);
+  };
+
+  const handleFavorites = (track, isFavorited) => {
+    const { uid, ...rest } = track;
+
+    setAllSong((songs) => {
+      return songs.map((val) => {
+        if (val.uid === track.uid) {
+          return { ...val, isFavorited: isFavorited };
+        } else {
+          return { ...val };
+        }
+      });
+    });
+
+    setQueue((queue) => {
+      return queue.map((val) => {
+        if (val.uid === track.uid) {
+          return { ...val, isFavorited: isFavorited };
+        } else {
+          return { ...val };
+        }
+      });
+    });
+
+    firebase
+      .database()
+      .ref("/songs/" + track.uid)
+      .update({ ...rest, isFavorited: isFavorited }, (err) => {
+        if (err) {
+          console.log(err);
+          alert(err.message);
+        }
+      });
   };
 
   async function addSongToPlaylist(track, playlist) {
@@ -112,7 +147,7 @@ export const TrackContextProvider = (props) => {
 
         if (snapshot) {
           snapshot.forEach((item) => {
-            songs.push(item.val());
+            songs.push({ ...item.val(), uid: item.key });
           });
           setAllSong(songs);
         }
@@ -161,6 +196,7 @@ export const TrackContextProvider = (props) => {
         isLoading: isLoading,
         setIsLoading: setIsLoading,
         changeQueue: changeQueue,
+        handleFavorites: handleFavorites,
       }}
     >
       {props.children}

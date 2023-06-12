@@ -42,7 +42,6 @@ const PlayScreen = () => {
             style={styles.navIcon}
           />
         </TouchableOpacity>
-        <Text style={styles.navTitle}>Navigation</Text>
       </View>
       <View style={styles.container}>
         <Image
@@ -146,7 +145,7 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: "bold",
     color: "#0C2461",
   },

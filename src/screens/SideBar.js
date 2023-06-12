@@ -7,6 +7,7 @@ import CustomDrawer from "../components/CustomDrawer";
 import PlaylistScreen from "./PlaylistScreen";
 import AllSongScreen from "./AllSongScreen";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import FavoritesScreen from "./FavoritesScreen";
 
 const Drawer = createDrawerNavigator();
 
@@ -69,6 +70,23 @@ const SideBar = () => {
             return (
               <MaterialIcons
                 name="featured-play-list"
+                size={22}
+                color={focused ? "#4A69BD" : "#868e96"}
+              />
+            );
+          },
+        }}
+      />
+      <Drawer.Screen
+        name="Favorites"
+        component={FavoritesScreen}
+        options={{
+          headerStyle: { backgroundColor: "#F7F1E3" },
+          headerTitle: "",
+          drawerIcon: ({ focused }) => {
+            return (
+              <Ionicons
+                name="heart"
                 size={22}
                 color={focused ? "#4A69BD" : "#868e96"}
               />

@@ -44,26 +44,26 @@ export async function setupPlayer() {
   }
 }
 
-export async function addTracks() {
-  const songs = [];
-  try {
-    const snapshot = await firebase
-      .database()
-      .ref("/songs")
-      .orderByChild("title")
-      .get();
+// export async function addTracks() {
+//   const songs = [];
+//   try {
+//     const snapshot = await firebase
+//       .database()
+//       .ref("/songs")
+//       .orderByChild("title")
+//       .get();
 
-    if (snapshot) {
-      snapshot.forEach((item) => {
-        songs.push(item.val());
-      });
-      await TrackPlayer.add(songs);
-      await TrackPlayer.setRepeatMode(RepeatMode.Queue);
-    }
-  } catch (err) {
-    console.log(err);
-  }
-}
+//     if (snapshot) {
+//       snapshot.forEach((item) => {
+//         songs.push({ ...item.val(), uid: item.key });
+//       });
+//       await TrackPlayer.add(songs);
+//       await TrackPlayer.setRepeatMode(RepeatMode.Queue);
+//     }
+//   } catch (err) {
+//     console.log(err);
+//   }
+// }
 
 export async function playbackService() {
   TrackPlayer.addEventListener(Event.RemotePause, () => {
