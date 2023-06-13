@@ -148,6 +148,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#f8f9fa",
     borderRadius: 10,
     paddingLeft: 15,
+    color: "#495057",
   },
   forgot: {
     backgroundColor: "#0C2461",

@@ -7,6 +7,7 @@ import { TrackContextProvider } from "./src/contexts/TrackContext";
 import Login from "./src/screens/Login";
 import Register from "./src/screens/Register";
 import SideBar from "./src/screens/SideBar";
+import ResetPassScreen from "./src/screens/ResetPassScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -28,6 +29,11 @@ const App = () => {
           <Stack.Screen
             name="Register"
             component={Register}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="ResetPass"
+            component={ResetPassScreen}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>

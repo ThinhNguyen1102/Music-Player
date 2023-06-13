@@ -89,7 +89,12 @@ const Login = () => {
           onChangeText={(pass) => setPassword(pass)}
           secureTextEntry
         ></TextInput>
-        <TouchableOpacity style={styles.forgot}>
+        <TouchableOpacity
+          style={styles.forgot}
+          onPress={() => {
+            navigation.navigate("ResetPass");
+          }}
+        >
           <Text style={styles.forgotText}>forgot password</Text>
         </TouchableOpacity>
       </View>
