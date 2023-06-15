@@ -18,29 +18,29 @@ const MiniPlayer = () => {
   const trackCtx = useContext(TrackContext);
   const playerState = usePlaybackState();
 
-  const spinValue = new Animated.Value(0);
+  // const spinValue = new Animated.Value(0);
 
-  const spin = () => {
-    Animated.loop(
-      Animated.timing(spinValue, {
-        toValue: 1,
-        duration: 6000,
-        easing: Easing.linear,
-        useNativeDriver: true,
-      })
-    ).start(() => spin());
-  };
+  // const spin = () => {
+  //   Animated.loop(
+  //     Animated.timing(spinValue, {
+  //       toValue: 1,
+  //       duration: 6000,
+  //       easing: Easing.linear,
+  //       useNativeDriver: true,
+  //     })
+  //   ).start(() => spin());
+  // };
 
-  useEffect(() => {
-    if (playerState === State.Playing) {
-      spin();
-    }
-  }, [playerState]);
+  // useEffect(() => {
+  //   if (playerState === State.Playing) {
+  //     spin();
+  //   }
+  // }, [playerState]);
 
-  const rotate = spinValue.interpolate({
-    inputRange: [0, 1],
-    outputRange: ["0deg", "360deg"],
-  });
+  // const rotate = spinValue.interpolate({
+  //   inputRange: [0, 1],
+  //   outputRange: ["0deg", "360deg"],
+  // });
 
   return (
     <TouchableOpacity
@@ -50,13 +50,9 @@ const MiniPlayer = () => {
       style={styles.miniPlayer}
     >
       <View style={styles.itemLeft}>
-        <Animated.View style={{ transform: [{ rotate }] }}>
-          <MaterialCommunityIcons
-            name="music-circle"
-            size={56}
-            color="#0C2461"
-          />
-        </Animated.View>
+        <MaterialCommunityIcons name="music-circle" size={56} color="#0C2461" />
+        {/* <Animated.View style={{ transform: [{ rotate }] }}>
+        </Animated.View> */}
         <View style={styles.info}>
           <Text style={styles.title}>{trackCtx.currentTrack?.title}</Text>
           <Text style={styles.artist}>{trackCtx.currentTrack?.artist}</Text>

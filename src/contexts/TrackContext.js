@@ -24,6 +24,7 @@ const TrackContext = React.createContext({
   setIsLoading: () => {},
   changeQueue: () => {},
   handleFavorites: (track, isFavorited) => {},
+  removeSongFromPlaylist: (track, playlist) => {},
 });
 
 export const TrackContextProvider = (props) => {
@@ -74,6 +75,29 @@ export const TrackContextProvider = (props) => {
         }
       });
   };
+
+  async function removeSongFromPlaylist(track, playlist) {
+    playlists.forEach((pl) => {
+      if (pl.uid === playlist.uid) {
+        pl.data.songs.forEach((song, index) => {
+          if (song.title === track.title) {
+            firebase
+              .database()
+              .ref(`/playlists/${playlist.uid}/songs/${index}`)
+              .remove((err) => {
+                if (err) {
+                  console.log(err);
+                }
+                alert(`remove success`);
+              });
+          }
+        });
+        console.log(pl);
+      }
+    });
+
+    getUserPlaylist();
+  }
 
   async function addSongToPlaylist(track, playlist) {
     const data = {
@@ -197,6 +221,7 @@ export const TrackContextProvider = (props) => {
         setIsLoading: setIsLoading,
         changeQueue: changeQueue,
         handleFavorites: handleFavorites,
+        removeSongFromPlaylist: removeSongFromPlaylist,
       }}
     >
       {props.children}

@@ -129,6 +129,6 @@ const styles = StyleSheet.create({
     width: "100%",
     paddingLeft: 20,
     paddingRight: 20,
-    height: "60%",
+    height: "63%",
   },
 });

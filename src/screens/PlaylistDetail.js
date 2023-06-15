@@ -18,7 +18,14 @@ const PlaylistDetail = () => {
   const navigation = useNavigation();
   const trackCtx = useContext(TrackContext);
 
-  const playlist = route.params.playlist;
+  let playlist = route.params.playlist;
+
+  trackCtx.playlists.forEach((pl) => {
+    if (pl.uid === playlist.uid) {
+      playlist = pl;
+    }
+  });
+
   const handleBackOnPress = () => {
     navigation.goBack();
   };

@@ -57,6 +57,7 @@ const Login = () => {
         .then(initUserLogin)
         .catch((err) => {
           alert(err.message);
+          trackCtx.setIsLoading(false);
         });
     }
   };

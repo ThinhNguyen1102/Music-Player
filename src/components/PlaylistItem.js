@@ -1,5 +1,12 @@
 import React, { useContext } from "react";
-import { StyleSheet, Text, TouchableOpacity, View, Image } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Image,
+  Alert,
+} from "react-native";
 import TrackPlayer from "react-native-track-player";
 import TrackContext from "../contexts/TrackContext";
 import { useNavigation } from "@react-navigation/native";
@@ -37,6 +44,28 @@ function PlaylistItem({
     navigation.navigate("SongOption", {
       track: track,
     });
+  }
+
+  function handleRemovePress() {
+    Alert.alert(
+      "Remove",
+      `You want to remove ${track.title} from ${playlist.data.playlistName}`,
+      [
+        {
+          text: "Cancel",
+          onPress: () => {
+            return;
+          },
+          style: "cancel",
+        },
+        {
+          text: "OK",
+          onPress: () => {
+            trackCtx.removeSongFromPlaylist(track, playlist);
+          },
+        },
+      ]
+    );
   }
 
   console.log(track);
@@ -95,6 +124,14 @@ function PlaylistItem({
               onPress={handleOptionPress}
             >
               <Entypo name="dots-three-vertical" size={20} color="#adb5bd" />
+            </TouchableOpacity>
+          )}
+          {isInPlaylist && (
+            <TouchableOpacity
+              style={styles.itemOption}
+              onPress={handleRemovePress}
+            >
+              <Ionicons name="close" size={20} color="#adb5bd" />
             </TouchableOpacity>
           )}
         </View>
